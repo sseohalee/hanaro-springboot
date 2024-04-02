@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>카운터</title>
+</head>
+<body>
+<h2 th:text="|카운트 : ${count}|">inner Text</h2>
+<h2>카운트 : [[${count}]]</h2>
+<button onclick="add()">더하기</button>
+<button onclick="minus()">빼기</button>
+<script>
+    function add(){
+        location.href="/plus";
+    }
+    function minus(){
+        location.href="/minus";
+    }
+</script>
+</body>
+</html>

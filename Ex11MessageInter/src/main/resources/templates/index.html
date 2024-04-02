@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<!-- #은 메시지 표현식   -->
+    <h2 th:text="#{hello}"></h2>
+    <h2 th:text="#{hello.name('Spring')}"></h2>
+<!--앵커 태그는 get 방식-->
+<a href="/changeLocale">한/영 전환</a>
+</body>
+</html>

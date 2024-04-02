@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>카운터</title>
+</head>
+<body>
+<h2 id="result_count" th:text="|카운트 : ${ count }|">0</h2>
+<button onclick="plus()">더하기</button>
+<button onclick="minusCount()">빼기</button>
+
+<script>
+    function plus(){
+        fetch("http://localhost:8080/api/plus",{
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        op: "plus"
+                    })
+                })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((json) =>  { //JSON객체
+                    document.getElementById("result_count").innerText
+                         = json.result;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+    }
+
+    function minus(){
+        fetch("http://localhost:8080/api/minus",{
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        op: "minus"
+                    })
+                })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((json) =>  { //JSON객체
+                    document.getElementById("result_count").innerText
+                         = json.result;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>계산기</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="border text-center row g-3 py-20">
+    <div class="text-center text-2xl">계산기 프로그램</div>
+    <form method="post">
+        <div class="col-md-12 my-3">
+            <label for="number1">숫자 1</label>
+            <input type="text" id="number1" name="number1" class="border bg-gray-200">
+        </div>
+        <div class="col-md-12">
+            <label for="number2">숫자 2</label>
+            <input type="text" id="number2" name="number2" class="border bg-gray-200">
+        </div>
+        <div class="col-md-12 my-3">
+            <label for="result">연산 결과</label>
+            <input class="border bg-gray-400 text-center text-white" type="text" id="result" disabled />
+        </div>
+        <button type="button" onclick="calc('add')" class="flex m-auto mb-2 bg-blue-200 p-1 px-28">덧셈</button>
+        <button type="button" onclick="calc('sub')" class="flex m-auto mb-2 bg-blue-200 p-1 px-28">뺄셈</button>
+        <button type="button" onclick="calc('mul')" class="flex m-auto mb-2 bg-blue-200 p-1 px-28">곱셈</button>
+        <button type="button" onclick="calc('div')" class="flex m-auto mb-2 bg-blue-200 p-1 px-28">나눗셈</button>
+        <button class="flex m-auto mb-2 bg-red-500 p-1 text-white px-24" type="button" onclick="resetAB()">지우기</button>
+    </form>
+</div>
+</body>
+<script>
+    const resetAB = () => {
+        document.getElementsByName("number1")[0].value = "0";
+        document.getElementsByName("number2")[0].value = "0";
+    }
+
+    function calc(op){
+        fetch("http://localhost:8080/api/v1/calc",{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ //객체를 문자열로 만듦.
+                    operation: op,
+                    num1: document.getElementsByName("number1").value,
+                    num2: document.getElementsByName("number2").value
+                })
+            })
+            .then((response) => { //HTTP 응답객체
+                return response.json();
+            })
+            .then((json) =>  { //JSON객체
+                console.log(json);
+                document.getElementById("result").value
+                     = json.result;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+</script>
+</html>
