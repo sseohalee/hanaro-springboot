@@ -1,8 +1,12 @@
 package com.study.Ex12H2DB;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //@Repository : JPA DAO 클래스에 적용하고, @Component가 내부에 있음.
@@ -25,7 +29,38 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     //  예) findById((long)2) : Select * from member where id=2;
     //  예) findByUser_id("hong") : Select * from member where user_id='hong';
 
+    // SQL : select * from member where user_id = :userId
     List<MemberEntity> findByUserId(String userId);
 
+    //Where구문에 And, Or를 메소드 이름에 추가할 수 있다.
+    //OrderBy 필드이름 Desc, Asc
+    //First5, Last5 갯수 제한을 할 수 있다.
+    List<MemberEntity> findFirst5ByUserIdAndUserNameOrderByIdDesc(
+            String userid, String username
+    );
 
+    Boolean existsByJoindateLessThanEqual(LocalDate date); // boolean이면 exists로 시작
+    long countByUserNameIgnoreCaseLike(String userid); // long은 count로 시작
+
+    // JPA에서 SQL을 사용하는 방법
+    // 1. JPQL
+    //  - 표준 ANSI SQL 문법을 지원함.
+    //  - 특정 데이터베이스에 종속적인 기능은 지원하지 않음.
+    //  - from절 뒤에는 entity클래스이름을 넣어준다. (소문자로 하면 에러)
+    @Query(value="SELECT m FROM MemberEntity m WHERE m.userId = :userid")
+    List<MemberEntity> findByUserId_JPQL_Query(String userid);
+
+    // 2. Native SQL
+    //  - 특정 데이터베이스에 종속적인 기능을 제공한다.
+    //    예) MySQL : LIMIT 5, now(), AUTO_INCREMENT
+    //        Oracle : sysdate, 시퀀스
+    //      1. Update, Insert, Delete 문은 @Modifying, @Transactional을 추가해야 됨.
+    @Query(value = "SELECT * FROM member WHERE user_id = :userid", nativeQuery = true)
+    List<MemberEntity> findByUserId_nativeQuery(String userid);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE member SET user_id = :userid where id = id",
+           nativeQuery = true )
+    int updateById_nativeQuery(Long id);
 }
