@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +22,11 @@ public class MemberService {
         System.out.println(reqDto.getInputName());
         memberList.add(reqDto.toEntity());
         return new MemberResDto("ok", "회원 가입이 완료되었습니다.");
+    }
+
+    public Optional<Member> findByName(String name) {
+        return memberList.stream().filter(m -> m.getUsername().equals(name))
+                .findAny();
     }
 
     // 아이디 중복 확인

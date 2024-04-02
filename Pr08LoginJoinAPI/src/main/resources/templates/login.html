@@ -45,12 +45,13 @@ function login() {
             return response.json();
           })
           .then((json) => {
-            document.getElementById("alert").style.display = "block";
-            document.getElementById("alert").innerHTML = json.message;
+            var flag = "login" + json.status;
+            location.href = "http://localhost:8080/login?flag="+flag;
           })
           .catch((error) => {
             console.log(error);
           });
+
       }
     </script>
 </head>
@@ -73,8 +74,17 @@ function login() {
                 >
                     <div class="col-12 col-lg-6 order-2 order-lg-1">
                         <h1 class="my-5 text-center">Login</h1>
-                        <div id="alert" class="alert alert-primary" role="alert" style="display: none">
-                        </div>
+
+                        <th:block th:unless="${flag==null}">
+                            <div th:switch="${flag}">
+                                <div id="alert" class="alert alert-primary" role="alert">
+                                    <span th:case="join">회원가입 성공!</span>
+                                    <span th:case="loginok">로그인 성공!</span>
+                                    <span th:case="loginfalse">로그인 실패</span>
+                                </div>
+                            </div>
+                        </th:block>
+
                         <div class="mb-3 d-flex flex-row">
                             <div
                                     class="d-flex me-2 justify-content-center align-items-center"

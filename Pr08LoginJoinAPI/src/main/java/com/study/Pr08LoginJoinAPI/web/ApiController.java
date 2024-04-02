@@ -29,6 +29,8 @@ public class ApiController {
 
     @PostMapping("/dupl")
     public MemberResDto dupl(@RequestBody DuplReqDto reqDto){
+        memberService.findByName(reqDto.getInputName()).orElseThrow(() -> new IllegalArgumentException("중복된 이름이 있습니다."));
+
         return memberService.dupl(reqDto);
     }
 }
