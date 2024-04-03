@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>관리자 페이지</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+            crossorigin="anonymous"
+    />
+</head>
+<body>
+<!--    번호 아이디 암호 이메일       -->
+<!--    1   admin 1111 abc@test.com-->
+<!--    2   tom   2222 tom@test.com-->
+<!--    3   hana  3333 hana@test.com-->
+
+<div
+        class="container-fluid p-4"
+        style="background-color: #eee"
+>
+    <div class="row">
+        <div
+                class="container-fluid"
+                style="
+            background-color: white;
+            max-width: 1200px;
+            border-radius: 20px;
+          "
+        >
+            <h1 class="my-5 text-center">관리자페이지 - 회원목록</h1>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>아이디</th>
+                        <th>암호</th>
+                        <th>이메일</th>
+                        <th>가입일</th>
+                        <th class="text-center">수정</th>
+                        <th class="text-center">삭제</th>
+                    </tr>
+                </thead>
+                <tbody id="product-tbody">
+                    
+                </tbody>
+            </table>
+
+            <div class="text-center my-5">
+                <a
+                        href="/"
+                        class="btn btn-primary"
+                        role="button"
+                >회원가입</a>
+                <a
+                        href="/login"
+                        class="btn btn-danger"
+                        role="button"
+                >로그인</a
+                >
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+      window.addEventListener("load", (event) => {
+        getMemberList();
+    });
+
+    function getMemberList(){
+        fetch("/api/v1/members", {
+                method: "GET",
+        headers: { "Content-Type": "application/json" }
+        })
+        .then((response) => { //HTTP 응답 객체
+        return response.json();
+        })
+        .then((json) => { 
+            console.log( json );
+            makeMemberList( json );
+        })
+    }
+
+    function makeMemberList(memberList){
+        let tbody = document.getElementById("product-tbody");
+        tbody.innerHTML = '';
+
+        memberList.forEach((member, index) => {
+        let trStr = `<tr class="text-center align-middle">
+        <th scope="row">${index + 1}</th>
+        <td class="text-center align-middle">
+          ${member.username}
+        </td>
+        <td class="text-center align-middle">
+          ${member.password}
+        </td>
+        <td class="text-center align-middle">
+          ${member.email}
+        </td>
+        <td class="text-center align-middle">
+          ${member.joindate}
+        </td>
+        <td class="text-center align-middle">
+          <button
+            onclick="window.location.href='/update-form/${index}';"
+            class="btn btn-danger fw-bold editBtn"
+            role="button"
+            >수정</button
+          >
+        </td>
+        <td class="text-center align-middle">
+          <button
+            href="/delete/${index}"
+            class="btn btn-danger fw-bold removeBtn"
+            role="button"
+            onclick="return confirmAndNotify(this)"
+            >삭제</button
+          >
+        </td>
+      </tr>`;
+
+      tbody.insertAdjacentHTML('beforeend', trStr);
+    });
+    }
+
+    // 상품 삭제 경고창
+  function confirmAndNotify(button) {
+    var confirmation = confirm("정말로 삭제하시겠습니까?");
+    if (confirmation) {
+      // delete/index
+      const url = "/api/v1"+button.getAttribute("href");
+      console.log("url : "+url);
+
+      //fetch("/api/v1/deleteProduct?index=0", {
+      fetch(url, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      })
+      .then((response) => { //HTTP 응답 객체
+        return response.json();
+      })
+      .then((json) => { //JSON JS객체
+        alert('삭제되었습니다.');
+        window.location.href = "/admin";
+      })
+    }
+    return false; //GET 요청이 안보내짐.
+  }
+</script>
+</body>
+</html>
