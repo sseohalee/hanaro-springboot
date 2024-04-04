@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 화면</title>
+</head>
+<body>
+    <h2>회원가입 화면</h2>
+    <form action="joinAction" method="post" name="userInfo" onsubmit="return checkValue();">
+        <table border="1">
+            <tr>
+                <td>아이디</td>
+                <td><input type="text" name="userId" id="userId" maxlength="20" required></td>
+            </tr>
+            <tr>
+                <td>비번</td>
+                <td><input type="text" name="userPw" id="userPw" maxlength="20" required></td>
+            </tr>
+            <tr>
+                <td>이름</td>
+                <td><input type="text" name="userName" id="userName"></td>
+            </tr>
+            <tr>
+                <td>가입일자</td>
+                <td><input type="date" name="joinDate" id="joinDate"></td>
+            </tr>
+            <tr>
+                <td>권한</td>
+                <td>
+                    <label for="userRole">권한을 선택해주세요.</label>
+                    <br>
+                    <select name="userRole" id="userRole" required>
+                        <option value="ROLE_USER">일반 회원</option>
+                        <option value="ROLE_ADMIN">관리자</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>주소</td>
+                <td>
+                    <input type="text" name="userAddress" id="userAddress" maxlength="100">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit">회원가입</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+<script>
+    function checkValue(){
+    if(!document.userInfo.userId.value){ // null 체크
+        alert("이름을 입력하세요.");
+        document.getElementById('userId').focus();
+        return false;
+    }
+    if(!document.userInfo.userPw.value){ // null 체크
+        alert("암호를 입력하세요.");
+        document.getElementById('userPw').focus();
+        return false;
+    }
+    if(!document.userInfo.userRole.value){ // null 체크
+        alert("권한을 입력하세요.");
+        document.getElementById('userRole').focus();
+        return false;
+    }
+        return true; // form 태그의 submit 통신이 이루어짐.
+    }
+</script>
+</body>
+</html>
