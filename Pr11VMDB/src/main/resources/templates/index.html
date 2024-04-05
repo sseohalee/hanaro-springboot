@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>자판기 프로그램</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../static/index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="bg-red-700 pt-3 text-center font-semibold">
+        <div class="bg-white m-3 rounded-t-lg">
+            <h2 class="text-2xl font-bold text-red-700" th:text="#{title}"></h2>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+            <div class="text-xl bg-white text-red-700 rounded-r-lg ml-3" th:text="#{product.list}"></div>
+            <div class="text-white">
+                <a href="/changeLocale">한/영 전환</a>
+            </div>
+            <div class="text-white"> - </div>
+        </div>
+        <div class="bg-white m-3 p-3">
+            <div>상품 목록이 비어있습니다.</div>
+            <th:block th:if="${!#lists.isEmpty([productList])}">
+                <table class="w-full border-2 border-red-500">
+                    <thead>
+                        <tr>
+                            <th th:text="#{product.num}"></th>
+                            <th th:text="#{product.name}"></th>
+                            <th th:text="#{product.price}"></th>
+                            <th th:text="#{product.limitdate}"></th>
+                            <th th:text="#{product.edit}"></th>
+                            <th th:text="#{product.remove}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product, status : ${ productList }">
+                            <td class="py-2"><span th:text="${ status.count }"></span></td>
+                            <td><span th:text="${ product.name }"></span></td>
+                            <td><span th:text="${ product.price }"></span></td>
+                            <td><span th:text="${ product.limit_date }"></span></td>
+                            <td><a th:href="|/update?id=${ product.id }|" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-md m-1" role="button" th:text="#{product.editBtn}"></a></td>
+                            <td><a th:href="|/delete?id=${ product.id }|" onclick="return confirmAndNotify(this)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-md m-1" role="button" th:text="#{product.removeBtn}"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th:block>
+        </div>
+        <div class="grid grid-cols-5">
+            <div class="col-end-6 col-span-2 bg-white m-3 text-red-700 rounded-l-lg" th:text="#{product.total(${listLength})}">▲ 총 개의 상품이 있습니다.</div>
+        </div>
+        <button th:onclick="|location.href='@{add}'|" class="bg-red-500 text-white rounded-lg p-3 mb-3" th:text="#{product.addBtn}">상품 추가하기!</button>
+    </div>
+
+    <script>
+        function confirmAndNotify(link) {
+            var confirmation = confirm("정말로 삭제하시겠습니까?");
+            if (confirmation) {
+              window.location.href = link.getAttribute("href");
+            }
+            return false;
+       }
+    </script>
+</body>
+</html>
