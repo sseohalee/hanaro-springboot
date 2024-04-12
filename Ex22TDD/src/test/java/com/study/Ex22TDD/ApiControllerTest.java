@@ -49,8 +49,7 @@ class ApiControllerTest {
     void loginAction1() throws Exception{
         //given when
         // loginAction함수가 제대로 동작하는 조건을 기술
-        memberService.member = new Member("hong", "1234");
-        given(memberService.loginAction(memberService.member))
+        given(memberService.loginAction(new Member("hong", "1234")))
                 .willReturn(1);
         //then
         String loginId = "hong";
