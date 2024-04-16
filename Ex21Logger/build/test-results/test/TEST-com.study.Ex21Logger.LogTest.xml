@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.study.Ex21Logger.LogTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-04-12T10:35:32" hostname="WIN-I037KC5982A" time="0.607">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.study.Ex21Logger.LogTest" time="0.597"/>
+  <testcase name="testSlf4j()" classname="com.study.Ex21Logger.LogTest" time="0.006"/>
+  <testcase name="TestLogger()" classname="com.study.Ex21Logger.LogTest" time="0.002"/>
+  <system-out><![CDATA[19:35:30.848 [Test worker] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.study.Ex21Logger.LogTest]: LogTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:35:30.928 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.study.Ex21Logger.Ex21LoggerApplication for test class com.study.Ex21Logger.LogTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.4)
+
+19:35:31.294 [Test worker] INFO  com.study.Ex21Logger.LogTest - Starting LogTest using Java 17.0.10 with PID 23356 (started by campus2H019 in C:\Users\campus2H019\Documents\springboot\Ex21Logger)
+19:35:31.295 [Test worker] INFO  com.study.Ex21Logger.LogTest - No active profile set, falling back to 1 default profile: "default"
+19:35:32.403 [Test worker] INFO  com.study.Ex21Logger.LogTest - Started LogTest in 1.38 seconds (process running for 2.328)
+19:35:33.029 [Test worker] INFO  com.study.Ex21Logger.LogTest - Slf4j info 로깅 2
+19:35:33.032 [Test worker] WARN  com.study.Ex21Logger.LogTest - Slf4j warn 로깅 3
+19:35:33.032 [Test worker] ERROR com.study.Ex21Logger.LogTest - Slf4j error 로깅 4
+19:35:33.035 [Test worker] INFO  com.study.Ex21Logger.LogTest - info 로깅 7
+19:35:33.036 [Test worker] WARN  com.study.Ex21Logger.LogTest - warn 로깅 8
+19:35:33.036 [Test worker] ERROR com.study.Ex21Logger.LogTest - error 로깅 9
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
