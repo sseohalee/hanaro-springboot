@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 내용</title>
+
+    <!-- 헤더 -->
+    <div th:replace="/fragments/header.html :: fragment-header"></div>
+
+</head>
+<body>
+<div id="wrap">
+
+    <!-- 네비바 -->
+    <div th:replace="/fragments/nav.html :: fragment-nav"></div>
+
+    <!-- /board/updateAction -->
+    <form action="updateAction" method="post" style="width: 100%;">
+        <table class="table table-bordered">
+            <input type="hidden" name="boardIdx" th:value="${ dto.boardIdx }">
+            <tr>
+                <td>글인덱스</td>
+                <td th:text="${ dto.boardIdx }">글인덱스</td>
+            </tr>
+            <tr>
+                <td>조회수</td>
+                <input type="hidden" name="boardHit" th:value="${ dto.boardHit }">
+                <td th:text="${ dto.boardHit }">조회수</td>
+            </tr>
+            <tr>
+                <td>이름</td>
+                <td>
+                    <input type="text" class="form-control" name="boardName"
+                           th:value="${ dto.boardName }" size="50">
+                </td>
+            </tr>
+            <tr>
+                <td>제목</td>
+                <td>
+                    <input type="text" class="form-control" name="boardTitle"
+                           th:value="${ dto.boardTitle }" size="50">
+                </td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td>
+            <textarea class="form-control" name="boardContent"
+                      cols="50" rows="10"
+                      th:text="${ dto.boardContent }">내용입니다.</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="d-flex justify-content-center">
+                        <input class="btn btn-success mx-2" type="submit" value="수정하기">
+                        <a href="listForm">
+                            <button type="button" class="btn btn-primary ms-2 mx-2">목록보기</button>
+                        </a>
+                        <a th:href="|deleteAction?boardIdx=${ dto.boardIdx }|">
+                            <button type="button" class="btn btn-danger ms-2 mx-2">삭제하기</button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+
+</div>
+
+</body>
+</html>
