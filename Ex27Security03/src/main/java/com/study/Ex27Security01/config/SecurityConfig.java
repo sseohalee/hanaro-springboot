@@ -65,7 +65,7 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logoutAction"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true) //세션 객체을 해제(내부 저장 데이터도 소멸)
-                        .deleteCookies("JSESSIONID") //reponse 헤더에 Set Cookie에 ""을 넣어준다.
+                        .deleteCookies("JSESSIONID") //response 헤더에 Set Cookie에 ""을 넣어준다.
                 )
 
         ;
